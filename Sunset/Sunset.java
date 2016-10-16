@@ -18,13 +18,14 @@ public class Sunset {
 		float N = restar(sumar(restar(N1, multiplicar(N2, N3)), day), 3.0f);
 	}
 	
-	float paso2(float longitude, float N, boolean flag){
+	float paso2Salida(float longitude, float N, boolean flag){
 		lngHour= dividir(longitude, 15.0f);
-		if (flag == true){
-			t= sumar(N, dividir(restar(6.0f, lngHour), 24.0f))
-		}else{
-			t= sumar(N, dividir(restar(18.0f, lngHour), 24.0f))
-		}
+		t= sumar(N, dividir(restar(6.0f, lngHour), 24.0f))
+	}
+	
+	float paso2Puesta(float longitude, float N, boolean flag){
+		lngHour= dividir(longitude, 15.0f);
+		t= sumar(N, dividir(restar(18.0f, lngHour), 24.0f))
 	}
 	
 	public static void main(String[] args) { 
