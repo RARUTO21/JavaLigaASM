@@ -35,6 +35,10 @@ public class Sunset {
 		return restar(multiplicar(0.9856f,t), 3.289f); //Retorna M
 	}
 	
+	float paso4(float M){
+		return sumar(sumar(sumar(multiplicar(1.916f,Math.sin(M)),multiplicar(0.020f*Math.sin(multiplicar(2.0f,M)))),282.634f),M);
+	}
+	
 	float paso5A(float L){
 		return Math.atan(multiplicar(0.91764f, Math.tan(L)) //Retorna M
 		//RA potentially needs to be adjusted into the range [0,360) by adding/subtracting 360
@@ -49,6 +53,15 @@ public class Sunset {
 	float paso5C(float RA){
 		return dividir(RA, 15.0f); // retorna el RA
 	}
+	
+	float paso6sinDec(float L){
+		return multiplicar(0.39782f,Math.sin(L));
+	}
+	
+	float paso6cosDec(float sinDec){
+		return Math.cos(Math.asin(sinDec));
+	}
+	
 	//calcula el angulo local de la hora del sol
 	float paso7ACosH(float zenith, float latitude, float sinDec){
 		return dividir(restar(Math.cos(zenith), multiplicar(sinDec, Math.sin(latitude))), multiplicar(cosDec, Math.cos(latitude)));
@@ -74,8 +87,17 @@ public class Sunset {
 		return dividir(H, 15.0f);
 	}
 	
+	float paso8(float H, float RA, float t){
+		return sumar(H,restar(RA,restar(multiplicar(0.06571f,t),6.622f)));
+	}
 	
+	float paso9(float T, float lngHour){
+		return restar(T,lngHour);
+	}
 	
+	float paso10(float UT, float localOffset){
+		return sumar(UT,localOffset);
+	}
 	
 	
 	public static void main(String[] args) { 
