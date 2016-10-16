@@ -28,6 +28,7 @@ public class Sunset {
 	
 	float paso2Fijo(float longitude){
 		return dividir(longitude, 15.0f);
+
 	}
 	
 	public static void main(String[] args) { 
