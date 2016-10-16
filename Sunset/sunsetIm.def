@@ -1,0 +1,7 @@
+LIBRARY SunsetImpl
+EXPORTS
+    Java_Sunset_sumar
+    Java_Sunset_restar
+    Java_Sunset_multiplicar
+    Java_Sunset_dividir
+    Java_Sunset_comparar
