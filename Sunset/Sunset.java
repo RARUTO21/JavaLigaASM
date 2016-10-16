@@ -14,17 +14,20 @@ public class Sunset {
 	float paso1(float day, float month, float year){
 		float N1 = Math.floor(divir(multiplicar(275.0f,month),9.0f));
 		float N2 = Math.floor(divir(sumar(9.0f,month),12.0f));
-		float N3 = dividir(sumar(restar(year, multiplicar(4.0f, Math.floor(divir(year,4.0f)))), 2.0f), 3.0f);
-		float N = restar(sumar(restar(N1, multiplicar(N2, N3)), day), 3.0f);
+		float N3 = sumar(1.0f,dividir(sumar(restar(year, multiplicar(4.0f, Math.floor(divir(year,4.0f)))), 2.0f), 3.0f));
+		return restar(sumar(restar(N1, multiplicar(N2, N3)), day), 30.0f);
 	}
 	
-	float paso2(float longitude, float N, boolean flag){
-		lngHour= dividir(longitude, 15.0f);
-		if (flag == true){
-			t= sumar(N, dividir(restar(6.0f, lngHour), 24.0f))
-		}else{
-			t= sumar(N, dividir(restar(18.0f, lngHour), 24.0f))
-		}
+	float paso2Salida(float longitude, float N){
+		return sumar(N, dividir(restar(6.0f, lngHour), 24.0f));
+	}
+	
+	float paso2Puesta(float longitude, float N){
+		return sumar(N, dividir(restar(18.0f, lngHour), 24.0f));
+	}
+	
+	float paso2Fijo(float longitude){
+		return dividir(longitude, 15.0f);
 	}
 	
 	public static void main(String[] args) { 
@@ -47,6 +50,8 @@ public class Sunset {
 		float sinDec;
 		float cosDec;
 		float tUpper;
+		
+		//COMENTARIO EN EL MAIN
 		
 	} 
 	
