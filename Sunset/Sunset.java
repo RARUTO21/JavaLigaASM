@@ -5,7 +5,8 @@ public class Sunset {
 	public native float multiplicar(float a, float b); 
 	public native float dividir(float a, float b);
 	public native float comparar(float a, float b);
-
+	//fasrg
+	
 	static { 
 		System.loadLibrary("operacionesImpl"); 
 	} 
