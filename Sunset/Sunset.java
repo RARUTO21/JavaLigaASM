@@ -5,7 +5,6 @@ public class Sunset {
 	public native float multiplicar(float a, float b); 
 	public native float dividir(float a, float b);
 	public native float comparar(float a, float b);
-	//fasrg
 	
 	static { 
 		System.loadLibrary("operacionesImpl"); 
@@ -28,8 +27,56 @@ public class Sunset {
 	
 	float paso2Fijo(float longitude){
 		return dividir(longitude, 15.0f);
-
 	}
+	
+	//Calcula la anomalia media del sol
+	
+	float paso3(float t){
+		return restar(multiplicar(0.9856f,t), 3.289f); //Retorna M
+	}
+	
+	float paso5A(float L){
+		return Math.atan(multiplicar(0.91764f, Math.tan(L)) //Retorna M
+		//RA potentially needs to be adjusted into the range [0,360) by adding/subtracting 360
+	}
+	
+	float paso5B(float L, float RA){
+		float Lquadrant = multiplicar((Math.floor(dividir(L, 90.0f)), 90.0f);
+		float RAquadrant = multiplicar((Math.floor(dividir(RA, 90.0f)), 90.0f);
+		return sumar(RA, restar(Lquadrant, RAquadrant)); // retorna el RA
+	}
+	
+	float paso5C(float RA){
+		return dividir(RA, 15.0f); // retorna el RA
+	}
+	//calcula el angulo local de la hora del sol
+	float paso7ACosH(float zenith, float latitude, float sinDec){
+		return dividir(restar(Math.cos(zenith), multiplicar(sinDec, Math.sin(latitude))), multiplicar(cosDec, Math.cos(latitude)));
+	}
+	
+	float paso7A(float cosH){
+		if (cosH >1){
+			System.out.println("El sol nunca sale en esta localizacion en la fecha indicada");
+		}
+		if (cosH < -1){
+			System.out.println("El sol nunca se pone en esta localizacion en la fecha indicada");
+		}
+	}
+	
+	float paso7BSalida(float cosH){
+		return restar(360.0f, Math.acos(cosH));
+	}
+	
+	float paso7BPuesta(float cosH){
+		return Math.acos(cosH);
+	}
+	float paso7BFinal(float H){
+		return dividir(H, 15.0f);
+	}
+	
+	
+	
+	
 	
 	public static void main(String[] args) { 
 		float day;
