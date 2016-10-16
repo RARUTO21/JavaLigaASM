@@ -67,7 +67,7 @@ public class Sunset {
 		return dividir(restar(Math.cos(zenith), multiplicar(sinDec, Math.sin(latitude))), multiplicar(cosDec, Math.cos(latitude)));
 	}
 	
-	float paso7A(float cosH){
+	void paso7A(float cosH){
 		if (cosH >1){
 			System.out.println("El sol nunca sale en esta localizacion en la fecha indicada");
 		}
@@ -121,8 +121,28 @@ public class Sunset {
 		float cosDec;
 		float tUpper;
 		
-		//COMENTARIO EN EL MAIN
+		Sunset algoritmo = new Sunset();
 		
+		N = algoritmo.paso1(day,month,year);
+		lngHour = algoritmo.paso2Fijo(longitude);
+		tLower = algoritmo.paso2Salida(longitude,N);
+		M = algoritmo.paso3(tLower);
+		L = algoritmo.paso4(M);
+		RA = algoritmo.paso5A(L);
+		RA = algoritmo.paso5B(L,RA);
+		RA = algoritmo.paso5C(RA);
+		
+		sinDec = algoritmo.paso6sinDec(L);
+		cosDec = algoritmo.paso6cosDec(sinDec);
+		
+		cosH = algoritmo.paso7ACosH(zenith,latitude,sinDec);
+		algotirmo.paso7A(cosH);
+		H = algoritmo.paso7BSalida(cosH);
+		H = algoritmo.paso7BFinal(H);
+		tUpper = algoritmo.paso8(H,RA,tLower);
+		UT = algoritmo.paso9(tUpper,lngHour);
+		
+		localT = algoritmo.paso10(UT,localOffset);
 	} 
 	
 
