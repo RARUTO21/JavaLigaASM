@@ -110,14 +110,16 @@ public class Sunset {
 	float paso10(float UT, float localOffset){
 		return sumar(UT,localOffset);
 	}
-	public void leerArchivo(String fileName,String str) throws FileNotFoundException{
+	
+	String leerArchivo(String fileName,String str) throws FileNotFoundException{
         Scanner scan = new Scanner(new File(fileName));
         while(scan.hasNext()){
             String line = scan.nextLine().toLowerCase().toString();
             if(line.contains(str)){
-                System.out.println(line);
+				return line;
             }
         }
+		return "";
 	}
 	
 	public static void main(String[] args) { 
@@ -141,6 +143,8 @@ public class Sunset {
 		float cosDec;
 		float tUpper;
 		float localOffset = -6.0f;
+		
+		String lineaArchivo;
 		
 		Sunset algoritmo = new Sunset();
 
@@ -187,7 +191,14 @@ public class Sunset {
 		System.out.println("RA: " + RA);
 		System.out.println("UT: " + UT);
 		System.out.println("localT: " + localT);
-		algoritmo.leerArchivo("file.txt", "arenal");
+		
+		try{
+			lineaArchivo = algoritmo.leerArchivo("file.txt","Cartago");
+			System.out.println(lineaArchivo);
+		}
+		catch(Exception e){
+			System.out.println("Archivo no encontrado.");
+		}
 	} 
 	
 
