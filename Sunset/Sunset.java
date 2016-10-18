@@ -1,4 +1,3 @@
-import javax.swing.JFileChooser;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -14,7 +13,7 @@ public class Sunset {
 	public native float dividir(float a, float b);
 	public native float comparar(float a, float b);
 
-	JFileChooser jfcAbrir = new JFileChooser();
+	//JFileChooser jfcAbrir = new JFileChooser();
 	
 	static { 
 		System.loadLibrary("sunsetImpl"); 
@@ -115,7 +114,7 @@ public class Sunset {
         Scanner scan = new Scanner(new File(fileName));
         while(scan.hasNext()){
             String line = scan.nextLine().toLowerCase().toString();
-            if(line.contains(str)){
+            if(line.contains(str.toLowerCase())){
 				return line;
             }
         }
@@ -126,8 +125,8 @@ public class Sunset {
 		float day = 3.0f;
 		float month = 7.0f;
 		float year = 2016.0f;
-		float latitude = 9.52f;
-		float longitude = 83.55f;
+		//float latitude = 9.52f;
+		//float longitude = 83.55f;
 		float zenith = 90.0f;
 		float N;
 		float lngHour;
@@ -143,62 +142,69 @@ public class Sunset {
 		float cosDec;
 		float tUpper;
 		float localOffset = -6.0f;
-		
 		String lineaArchivo;
 		
 		Sunset algoritmo = new Sunset();
-
-		algoritmo.jfcAbrir.show();
-		
-		N = algoritmo.paso1(day,month,year);
-		lngHour = algoritmo.paso2Fijo(longitude);
-		tLower = algoritmo.paso2Salida(longitude,N);
-		M = algoritmo.paso3(tLower);
-		
-		L = algoritmo.paso4(M);
-		if(L > 360)
-		   L-=360;
-		if(L < 0)
-		   L+=360;
-
-		RA = algoritmo.paso5A(L);
-		if(RA > 360)
-		   RA-=360;
-		if(RA < 0)
-		   RA+=360;
-
-		RA = algoritmo.paso5B(L,RA);
-		RA = algoritmo.paso5C(RA);
-		
-		sinDec = algoritmo.paso6sinDec(L);
-		cosDec = algoritmo.paso6cosDec(sinDec);
-		
-		cosH = algoritmo.paso7ACosH(zenith,latitude,sinDec,cosDec);
-		algoritmo.paso7A(cosH);
-		H = algoritmo.paso7BSalida(cosH);
-		H = algoritmo.paso7BFinal(H);
-		tUpper = algoritmo.paso8(H,RA,tLower);
-		
-		UT = algoritmo.paso9(tUpper,lngHour);
-		if(UT > 24)
-		   UT-=24;
-		if(UT < 0)
-		   UT+=24;	
-		
-		localT = algoritmo.paso10(UT,localOffset);
-
-		System.out.println("L: "+ L);
-		System.out.println("RA: " + RA);
-		System.out.println("UT: " + UT);
-		System.out.println("localT: " + localT);
-		
 		try{
-			lineaArchivo = algoritmo.leerArchivo("file.txt","Cartago");
+			Scanner reader = new Scanner(System.in); 
+			System.out.println("Escriba el nombre de la ciudad: ");
+			String city = reader.next(); 
+			lineaArchivo = algoritmo.leerArchivo("file.txt",city);
 			System.out.println(lineaArchivo);
+			String[] partes = lineaArchivo.split(",");
+			String name = partes[0];
+			float latitude = Float.parseFloat(partes[1]);
+			float longitude = Float.parseFloat(partes[2]);
+			System.out.println(name);
+			System.out.println(latitude);
+			System.out.println(longitude);
+			N = algoritmo.paso1(day,month,year);
+			lngHour = algoritmo.paso2Fijo(longitude);
+			tLower = algoritmo.paso2Salida(longitude,N);
+			M = algoritmo.paso3(tLower);
+			
+			L = algoritmo.paso4(M);
+			if(L > 360)
+			   L-=360;
+			if(L < 0)
+			   L+=360;
+
+			RA = algoritmo.paso5A(L);
+			if(RA > 360)
+			   RA-=360;
+			if(RA < 0)
+			   RA+=360;
+
+			RA = algoritmo.paso5B(L,RA);
+			RA = algoritmo.paso5C(RA);
+			
+			sinDec = algoritmo.paso6sinDec(L);
+			cosDec = algoritmo.paso6cosDec(sinDec);
+			
+			cosH = algoritmo.paso7ACosH(zenith,latitude,sinDec,cosDec);
+			algoritmo.paso7A(cosH);
+			H = algoritmo.paso7BSalida(cosH);
+			H = algoritmo.paso7BFinal(H);
+			tUpper = algoritmo.paso8(H,RA,tLower);
+			
+			UT = algoritmo.paso9(tUpper,lngHour);
+			if(UT > 24)
+			   UT-=24;
+			if(UT < 0)
+			   UT+=24;	
+			
+			localT = algoritmo.paso10(UT,localOffset);
+
+			System.out.println("L: "+ L);
+			System.out.println("RA: " + RA);
+			System.out.println("UT: " + UT);
+			System.out.println("localT: " + localT);
 		}
 		catch(Exception e){
 			System.out.println("Archivo no encontrado.");
 		}
+		
+		
 	} 
 	
 
