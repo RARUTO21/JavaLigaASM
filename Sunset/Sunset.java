@@ -1,4 +1,10 @@
 import javax.swing.JFileChooser;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Sunset {
 
@@ -104,7 +110,15 @@ public class Sunset {
 	float paso10(float UT, float localOffset){
 		return sumar(UT,localOffset);
 	}
-	
+	public void leerArchivo(String fileName,String str) throws FileNotFoundException{
+        Scanner scan = new Scanner(new File(fileName));
+        while(scan.hasNext()){
+            String line = scan.nextLine().toLowerCase().toString();
+            if(line.contains(str)){
+                System.out.println(line);
+            }
+        }
+	}
 	
 	public static void main(String[] args) { 
 		float day = 3.0f;
@@ -173,6 +187,7 @@ public class Sunset {
 		System.out.println("RA: " + RA);
 		System.out.println("UT: " + UT);
 		System.out.println("localT: " + localT);
+		algoritmo.leerArchivo("file.txt", "arenal");
 	} 
 	
 
