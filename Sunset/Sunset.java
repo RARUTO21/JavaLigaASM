@@ -39,12 +39,14 @@ public class Sunset {
 		return restar(multiplicar(0.9856f,t), 3.289f); //Retorna M
 	}
 	
+	//dividir(multiplicar(var,(float)Math.PI),180.0f)
+	
 	float paso4(float M){
-		return sumar(sumar(sumar(multiplicar(1.916f,(float) Math.sin(M)),multiplicar(0.020f, (float) Math.sin(multiplicar(2.0f,M)))),282.634f),M);
+		return sumar(sumar(sumar(multiplicar(1.916f,(float) Math.sin(dividir(multiplicar(M,(float)Math.PI),180.0f))),multiplicar(0.020f, (float) Math.sin(dividir(multiplicar(multiplicar(2.0f,M),(float)Math.PI),180.0f)))),282.634f),M);
 	}
 	
 	float paso5A(float L){
-		return (float) Math.atan(multiplicar(0.91764f, (float) Math.tan(L))); //Retorna M
+		return dividir(multiplicar(180.0f,(float)Math.atan(multiplicar(0.91764f, (float) Math.tan(dividir(multiplicar(L,(float)Math.PI),180.0f))))),(float)Math.PI); //Retorna M
 		//RA potentially needs to be adjusted into the range [0,360) by adding/subtracting 360
 	}
 	
@@ -59,16 +61,16 @@ public class Sunset {
 	}
 	
 	float paso6sinDec(float L){
-		return multiplicar(0.39782f, (float)Math.sin(L));
+		return multiplicar(0.39782f, (float)Math.sin(dividir(multiplicar(L,(float)Math.PI),180.0f)));
 	}
 	
 	float paso6cosDec(float sinDec){
-		return (float) Math.cos((float)Math.asin(sinDec));
+		return (float) Math.cos((float)Math.asin(sinDec));  //NO SE LE HACE NADA A ESTE
 	}
 	
 	//calcula el angulo local de la hora del sol
 	float paso7ACosH(float zenith, float latitude, float sinDec, float cosDec){
-		return dividir(restar((float) Math.cos(zenith), multiplicar(sinDec, (float) Math.sin(latitude))), multiplicar(cosDec, (float) Math.cos(latitude)));
+		return dividir(restar((float) Math.cos(dividir(multiplicar(zenith,(float)Math.PI),180.0f)), multiplicar(sinDec, (float) Math.sin(dividir(multiplicar(latitude,(float)Math.PI),180.0f)))), multiplicar(cosDec, (float) Math.cos(dividir(multiplicar(latitude,(float)Math.PI),180.0f))));
 	}
 	
 	void paso7A(float cosH){
@@ -81,11 +83,11 @@ public class Sunset {
 	}
 	
 	float paso7BSalida(float cosH){
-		return restar(360.0f, (float) Math.acos(cosH));
+		return restar(360.0f, (float) dividir(multiplicar(180.0f,(float)Math.acos(cosH)),(float) Math.PI));
 	}
 	
 	float paso7BPuesta(float cosH){
-		return (float) Math.acos(cosH);
+		return (float) dividir(multiplicar(180.0f,(float) Math.acos(cosH)),(float) Math.PI);
 	}
 	float paso7BFinal(float H){
 		return dividir(H, 15.0f);
@@ -105,9 +107,9 @@ public class Sunset {
 	
 	
 	public static void main(String[] args) { 
-		float day = 21.0f;
-		float month = 9.0f;
-		float year = 1994.0f;
+		float day = 3.0f;
+		float month = 7.0f;
+		float year = 2016.0f;
 		float latitude = 9.52f;
 		float longitude = 83.55f;
 		float zenith = 90.0f;
@@ -128,7 +130,7 @@ public class Sunset {
 		
 		Sunset algoritmo = new Sunset();
 
-		//jfcAbrir.show();
+		algoritmo.jfcAbrir.show();
 		
 		N = algoritmo.paso1(day,month,year);
 		lngHour = algoritmo.paso2Fijo(longitude);
@@ -140,13 +142,13 @@ public class Sunset {
 		   L-=360;
 		if(L < 0)
 		   L+=360;
-		
+
 		RA = algoritmo.paso5A(L);
 		if(RA > 360)
 		   RA-=360;
 		if(RA < 0)
 		   RA+=360;
-		
+
 		RA = algoritmo.paso5B(L,RA);
 		RA = algoritmo.paso5C(RA);
 		
@@ -163,9 +165,14 @@ public class Sunset {
 		if(UT > 24)
 		   UT-=24;
 		if(UT < 0)
-		   UT+=24;
+		   UT+=24;	
 		
 		localT = algoritmo.paso10(UT,localOffset);
+
+		System.out.println("L: "+ L);
+		System.out.println("RA: " + RA);
+		System.out.println("UT: " + UT);
+		System.out.println("localT: " + localT);
 	} 
 	
 
