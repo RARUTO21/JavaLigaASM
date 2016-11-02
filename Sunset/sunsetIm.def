@@ -1,7 +1,14 @@
-LIBRARY SunsetImpl
+LIBRARY SunsetIm
 EXPORTS
     Java_Sunset_sumar
     Java_Sunset_restar
     Java_Sunset_multiplicar
     Java_Sunset_dividir
     Java_Sunset_comparar
+    Java_Sunset_sin
+    Java_Sunset_cos
+    Java_Sunset_tan
+    Java_Sunset_asin
+    Java_Sunset_acos
+    Java_Sunset_atan
+    Java_Sunset_pi
